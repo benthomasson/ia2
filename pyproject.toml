@@ -10,6 +10,7 @@ dependencies = [
 
 [project.optional-dependencies]
 opengl = ["moderngl"]
+dev = ["pytest", "pytest-cov", "ruff"]
 
 [tool.setuptools]
 packages = ["ia2"]
