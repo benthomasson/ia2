@@ -5,7 +5,6 @@ import subprocess
 import time
 from contextlib import contextmanager
 
-import cairo
 import numpy as np
 import pygame
 from scipy.io import wavfile
@@ -14,7 +13,6 @@ from ia2.audio import combine
 from ia2.draw import make_surface
 from ia2.frames import StopAnimation, StopInteractive
 from ia2.types import (
-    Animation,
     AnimationSequence,
     Image,
     Interactive,

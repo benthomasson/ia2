@@ -7,8 +7,17 @@ Consolidated from ia.lang — numbered variants merged into single functions.
 import cairo
 
 from ia2.math import (
-    RED, BLUE, angle, calculate_ellipse, calculate_elliptical_arc,
-    distance, pi, acos, atan2, cos, sin,
+    BLUE,
+    RED,
+    acos,
+    angle,
+    atan2,
+    calculate_ellipse,
+    calculate_elliptical_arc,
+    cos,
+    distance,
+    pi,
+    sin,
 )
 
 

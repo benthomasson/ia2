@@ -3,8 +3,8 @@
 import cairo
 import numpy as np
 
-from ia2.draw import draw_line, draw_path
-from ia2.math import RED, pi
+from ia2.draw import draw_line
+from ia2.math import RED
 
 
 def draw_bezier(anim, p0, p1, p2, p3, color, width=1, fill=None, fill_alpha=1, alpha=1):

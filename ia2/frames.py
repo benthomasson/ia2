@@ -5,9 +5,7 @@ Consolidated: frames2 → frames (the standard frame loop everyone uses).
 """
 
 import time
-from collections.abc import Generator
 from contextlib import contextmanager
-from typing import Callable, List
 
 import numpy as np
 import pygame
@@ -151,7 +149,7 @@ def save_frame(anim):
 
         anim.window.swap_buffers()
 
-        events = anim.window.process_events()
+        anim.window.process_events()
         if anim.window.is_closing:
             raise StopInteractive()
 

@@ -63,7 +63,7 @@ def load_wav_file(filename):
             print(f"  Channels: {num_channels}")
             audio_mono = np.mean(audio_float, axis=1).astype(np.float32)
         else:
-            print(f"  Channels: 1")
+            print("  Channels: 1")
             audio_mono = audio_float
 
         duration = len(audio_mono) / sample_rate

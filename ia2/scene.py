@@ -1,13 +1,11 @@
 """Scene/transformation system: point wrappers, z-ordering, 3D view ordering."""
 
 import math
+from statistics import mean
 
 import cairo
 import numpy as np
 from scipy.spatial.transform import Rotation
-from statistics import mean
-
-from ia2.math import distance
 
 
 class ScaledPoint:
