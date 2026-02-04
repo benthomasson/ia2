@@ -1,0 +1,11 @@
+*.pyc
+__pycache__
+.DS_Store
+*.egg-info
+build
+dist
+*.mp4
+*.wav
+*.log
+.coverage
+*,cover

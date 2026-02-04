@@ -1,0 +1,10 @@
+[project]
+name = "ia2"
+version = "0.1.0"
+
+[tool.setuptools]
+packages = ["ia2"]
+
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
