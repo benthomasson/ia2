@@ -1,6 +1,15 @@
 [project]
 name = "ia2"
 version = "0.1.0"
+dependencies = [
+    "pycairo",
+    "pygame-ce",
+    "numpy",
+    "scipy",
+]
+
+[project.optional-dependencies]
+opengl = ["moderngl"]
 
 [tool.setuptools]
 packages = ["ia2"]
