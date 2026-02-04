@@ -1,4 +1,4 @@
-"""Geometric intersection functions: circle-circle, line-line, line-circle."""
+"""Geometric intersection functions: circle-circle, line-line, line-circle, polygon clipping."""
 
 import numpy as np
 
@@ -85,3 +85,61 @@ def line_circle_intersect(p1, p2, c, r):
     b = bt + c
 
     return (a, b)
+
+
+def clip_polygon(poly, xmin, ymin, xmax, ymax):
+    """Clip a polygon to an axis-aligned rectangle using Sutherland-Hodgman.
+
+    Args:
+        poly: List of (x, y) vertex tuples.
+        xmin, ymin, xmax, ymax: Rectangle bounds.
+
+    Returns:
+        List of (x, y) tuples for the clipped polygon, or [] if fully outside.
+    """
+    def _clip_edge(pts, side, val):
+        if not pts:
+            return []
+        out = []
+        for i in range(len(pts)):
+            curr = pts[i]
+            prev = pts[i - 1]
+            c_in = _inside(curr, side, val)
+            p_in = _inside(prev, side, val)
+            if c_in:
+                if not p_in:
+                    out.append(_intersect(prev, curr, side, val))
+                out.append(curr)
+            elif p_in:
+                out.append(_intersect(prev, curr, side, val))
+        return out
+
+    result = list(poly)
+    for side, val in [('L', xmin), ('R', xmax), ('B', ymin), ('T', ymax)]:
+        result = _clip_edge(result, side, val)
+        if not result:
+            return []
+    return result
+
+
+def _inside(p, side, val):
+    if side == 'L': return p[0] >= val
+    if side == 'R': return p[0] <= val
+    if side == 'B': return p[1] >= val
+    if side == 'T': return p[1] <= val
+
+
+def _intersect(p1, p2, side, val):
+    x1, y1 = p1
+    x2, y2 = p2
+    dx, dy = x2 - x1, y2 - y1
+    if side in ('L', 'R'):
+        if abs(dx) < 1e-12:
+            return (val, y1)
+        t = (val - x1) / dx
+        return (val, y1 + t * dy)
+    else:
+        if abs(dy) < 1e-12:
+            return (x1, val)
+        t = (val - y1) / dy
+        return (x1 + t * dx, val)
