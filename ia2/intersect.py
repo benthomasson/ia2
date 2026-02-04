@@ -36,14 +36,13 @@ def line_intersect(p1, p2, p3, p4):
     x3, y3 = p3
     x4, y4 = p4
 
-    m1 = (y2 - y1) / (x2 - x1)
-    m2 = (y4 - y3) / (x4 - x3)
-
-    if m1 == m2:
+    denom = (x1 - x2) * (y3 - y4) - (y1 - y2) * (x3 - x4)
+    if denom == 0:
         return None
 
-    x = (m1 * x1 - m2 * x3 + y3 - y1) / (m1 - m2)
-    y = m1 * (x - x1) + y1
+    t = ((x1 - x3) * (y3 - y4) - (y1 - y3) * (x3 - x4)) / denom
+    x = x1 + t * (x2 - x1)
+    y = y1 + t * (y2 - y1)
     return (x, y)
 
 

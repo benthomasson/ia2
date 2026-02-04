@@ -60,6 +60,19 @@ class TestLineIntersect:
         assert pytest.approx(x) == 1.0
         assert pytest.approx(y) == 1.0
 
+    def test_vertical_line(self):
+        # Vertical line x=2 and horizontal line y=3
+        result = line_intersect((2, -1), (2, 5), (0, 3), (4, 3))
+        assert result is not None
+        x, y = result
+        assert pytest.approx(x) == 2.0
+        assert pytest.approx(y) == 3.0
+
+    def test_both_vertical_parallel(self):
+        # Two vertical lines — parallel, no intersection
+        result = line_intersect((1, 0), (1, 5), (3, 0), (3, 5))
+        assert result is None
+
 
 class TestLineCircleIntersect:
     def test_line_through_circle_center(self):
