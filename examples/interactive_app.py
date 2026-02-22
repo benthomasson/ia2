@@ -1,3 +1,10 @@
+# /// script
+# requires-python = ">=3.10"
+# dependencies = ["ia2"]
+#
+# [tool.uv.sources]
+# ia2 = { git = "https://github.com/benthomasson/ia2" }
+# ///
 """Interactive app: a white disk follows the mouse cursor."""
 
 import pygame

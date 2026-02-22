@@ -1,6 +1,11 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
 [project]
 name = "ia2"
 version = "0.1.0"
+requires-python = ">=3.10"
 dependencies = [
     "pycairo",
     "pygame-ce",
@@ -11,13 +16,6 @@ dependencies = [
 [project.optional-dependencies]
 opengl = ["moderngl"]
 dev = ["pytest", "pytest-cov", "ruff"]
-
-[tool.setuptools]
-packages = ["ia2"]
-
-[build-system]
-requires = ["setuptools"]
-build-backend = "setuptools.build_meta"
 
 [tool.ruff]
 line-length = 100

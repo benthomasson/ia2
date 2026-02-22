@@ -1,3 +1,10 @@
+# /// script
+# requires-python = ">=3.10"
+# dependencies = ["ia2"]
+#
+# [tool.uv.sources]
+# ia2 = { git = "https://github.com/benthomasson/ia2" }
+# ///
 """Pygame input demo: keyboard movement and mouse click to create disks."""
 
 import time

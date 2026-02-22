@@ -1,3 +1,10 @@
+# /// script
+# requires-python = ">=3.10"
+# dependencies = ["ia2"]
+#
+# [tool.uv.sources]
+# ia2 = { git = "https://github.com/benthomasson/ia2" }
+# ///
 """Demonstrate a custom generator-based element.
 
 Elements are Python generators that yield each frame, allowing

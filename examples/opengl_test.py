@@ -1,3 +1,10 @@
+# /// script
+# requires-python = ">=3.10"
+# dependencies = ["ia2", "moderngl"]
+#
+# [tool.uv.sources]
+# ia2 = { git = "https://github.com/benthomasson/ia2" }
+# ///
 """OpenGL interactive test: animated disk and rectangle."""
 
 import time

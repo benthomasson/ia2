@@ -1,3 +1,10 @@
+# /// script
+# requires-python = ">=3.10"
+# dependencies = ["ia2"]
+#
+# [tool.uv.sources]
+# ia2 = { git = "https://github.com/benthomasson/ia2" }
+# ///
 """Simple animation: a disk moves across the screen."""
 
 from ia2.context import ffmpeg_wav
