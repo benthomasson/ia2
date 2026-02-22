@@ -2,6 +2,7 @@
 
 import os
 import subprocess
+import tempfile
 import time
 from contextlib import contextmanager
 
@@ -39,6 +40,7 @@ class FfmpegProxy:
         self.parts = []
 
     def start_process(self):
+        """Start a new FFmpeg subprocess for encoding the next video part."""
         self.filename = f"{self.base}.{self.part_number:04d}{self.ext}"
         self.parts.append(self.filename)
         self.part_number += 1
@@ -55,6 +57,7 @@ class FfmpegProxy:
         self.frame_count = 0
 
     def stop_process(self):
+        """Stop the current FFmpeg subprocess and flush its output."""
         if self.writing_process is not None:
             self.writing_process.stdin.close()
             self.writing_process.wait()
@@ -63,6 +66,7 @@ class FfmpegProxy:
             self.writing_process = None
 
     def write(self, data):
+        """Write a raw video frame, auto-splitting parts when max_frames is exceeded."""
         self.frame_count += 1
         if self.frame_count > self.max_frames:
             self.stop_process()
@@ -72,18 +76,25 @@ class FfmpegProxy:
         self.writing_process.stdin.write(data)
 
     def combine_parts(self):
+        """Concatenate split video parts into the final output file."""
         if len(self.parts) == 0:
             print("No parts to combine")
             return
         elif len(self.parts) == 1:
             os.rename(self.filename, self.final_filename)
         else:
-            with open("files.txt", "w") as f:
+            with tempfile.NamedTemporaryFile(mode="w", suffix=".txt", delete=False) as f:
                 for part in self.parts:
                     f.write(f"file '{part}'\n")
-            command = f"ffmpeg -y -f concat -safe 0 -i files.txt -c copy {self.final_filename}"
-            command = command.split(" ")
-            subprocess.run(command)
+                tmpname = f.name
+            try:
+                command = f"ffmpeg -y -f concat -safe 0 -i {tmpname} -c copy {self.final_filename}"
+                subprocess.run(command.split(" "))
+            finally:
+                os.unlink(tmpname)
+            for part in self.parts:
+                if os.path.exists(part):
+                    os.unlink(part)
 
 
 @contextmanager
@@ -183,8 +194,8 @@ def pygame_interactive(
     fps=60,
     size=(640, 480),
     debug=False,
-    events=[],
-    commands=[],
+    events=None,
+    commands=None,
     icon=None,
     title=None,
     video_output=None,
@@ -196,6 +207,10 @@ def pygame_interactive(
     audio_file_name="output_audio.wav",
 ):
     """Context manager for an interactive PyGame window with optional recording."""
+    if events is None:
+        events = []
+    if commands is None:
+        commands = []
     width, height = size
     start = time.time()
     pygame.init()
@@ -255,8 +270,8 @@ def opengl_interactive(
     fps=60,
     size=(640, 480),
     debug=False,
-    events=[],
-    commands=[],
+    events=None,
+    commands=None,
     icon=None,
     title=None,
     video_output=None,
@@ -268,6 +283,10 @@ def opengl_interactive(
     audio_file_name="output_audio.wav",
 ):
     """Context manager for an interactive OpenGL window with moderngl support."""
+    if events is None:
+        events = []
+    if commands is None:
+        commands = []
     try:
         import moderngl
     except ImportError:

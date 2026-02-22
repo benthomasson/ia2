@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Any, Callable, Generator, Iterator, Optional, Union
+from typing import Any, Callable, Generator, Optional, Union
 
 import cairo
 import numpy as np
@@ -8,6 +8,8 @@ import pygame
 
 
 class Animation:
+    """Video animation context with FFmpeg pipe for frame-by-frame encoding."""
+
     __slots__ = [
         "ctx", "surface", "pipe", "fps", "width", "height",
         "debug", "debug_color", "construct", "selected", "ui_scale",
@@ -41,6 +43,8 @@ class Animation:
 
 
 class Image:
+    """Static PNG image rendering context."""
+
     __slots__ = [
         "ctx", "surface", "width", "height", "debug", "fps",
         "construct", "selected", "debug_color", "ui_scale",
@@ -71,6 +75,8 @@ class Image:
 
 
 class Sequence:
+    """Audio-only sequence context with tempo and sample rate."""
+
     __slots__ = ["wav_file", "tempo", "rate", "fps", "current_frame", "debug"]
 
     def __init__(
@@ -85,6 +91,8 @@ class Sequence:
 
 
 class AnimationSequence:
+    """Combined video and audio rendering context with beat-synced timing."""
+
     __slots__ = [
         "ctx", "surface", "pipe", "width", "height", "fps",
         "wav_file", "tempo", "rate", "length", "current_frame",
@@ -152,6 +160,8 @@ class AnimationSequence:
 
 
 class Interactive:
+    """PyGame interactive display context with event handling."""
+
     __slots__ = [
         "ctx", "surface", "display", "clock", "events", "commands",
         "fps", "width", "height", "debug", "debug_color",
@@ -194,6 +204,8 @@ class Interactive:
 
 
 class InteractiveAnimation:
+    """PyGame interactive context with simultaneous video/audio recording."""
+
     __slots__ = [
         "ctx", "surface", "pipe", "display", "clock", "events", "commands",
         "fps", "width", "height", "debug", "debug_color",
@@ -273,6 +285,8 @@ class InteractiveAnimation:
 
 
 class OpenGLInteractive:
+    """OpenGL interactive display context using moderngl and PyGame."""
+
     __slots__ = [
         "ctx", "surface", "window", "gl_ctx", "fbo", "color_texture", "vao",
         "clock", "events", "commands", "fps", "width", "height",
@@ -323,6 +337,8 @@ class OpenGLInteractive:
 
 
 class OpenGLInteractiveAnimation:
+    """OpenGL interactive context with simultaneous video/audio recording."""
+
     __slots__ = [
         "ctx", "surface", "pipe", "window", "gl_ctx", "fbo", "color_texture", "vao",
         "clock", "events", "commands", "fps", "width", "height",
@@ -410,6 +426,8 @@ class OpenGLInteractiveAnimation:
 
 
 class Element:
+    """A named generator-based animation element with position and config state."""
+
     __slots__ = [
         "name", "generator", "visible", "point", "points",
         "scalefactor", "rotation", "config", "config_name",
@@ -478,6 +496,8 @@ class Element:
 
 
 class Scene(dict):
+    """3D scene parameters: rotation angles, translation, scale, and projection settings."""
+
     def __init__(
         self,
         x_angle: float = 0,
@@ -506,6 +526,8 @@ class Scene(dict):
 
 
 class MemoryRange:
+    """A named range within a MemoryMap, with size per item and item count."""
+
     __slots__ = ["name", "size", "n"]
 
     def __init__(self, name: str, size: int, n: int) -> None:
@@ -525,6 +547,8 @@ class MemoryRange:
 
 
 class MemoryMap:
+    """Contiguous memory layout of named ranges, providing slice access by name."""
+
     __slots__ = ["ranges", "indexes", "length"]
 
     def __init__(self, ranges: Optional[list[tuple[str, int, int]]] = None) -> None:

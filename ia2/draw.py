@@ -46,7 +46,7 @@ def paint_background(anim, color):
 # --- Basic shapes ---
 
 def draw_disk(anim, p, r, color, width=10, alpha=1, fill_alpha=0.5, fill=None):
-    """Draw a filled circle (disk) with outline."""
+    """Draw a filled circle (disk) with outline. Unlike draw_circle, always fills with semi-transparent color by default."""
     x, y = p
     ctx = anim.ctx
     if isinstance(fill, cairo.Gradient):
@@ -73,7 +73,7 @@ def draw_disk(anim, p, r, color, width=10, alpha=1, fill_alpha=0.5, fill=None):
 
 
 def draw_circle(anim, p, r, color, width=10, alpha=1, fill=None, fill_alpha=1):
-    """Draw a circle with optional fill."""
+    """Draw a stroke-only circle. Only fills when fill is explicitly provided (unlike draw_disk)."""
     x, y = p
     ctx = anim.ctx
     if fill is not None:
@@ -89,7 +89,7 @@ def draw_circle(anim, p, r, color, width=10, alpha=1, fill=None, fill_alpha=1):
 
 def draw_arc(anim, p, r, start, end, color, width=10, clockwise=True, alpha=1,
              fill=None, fill_alpha=1):
-    """Draw an arc (portion of a circle) with optional fill."""
+    """Draw an arc. clockwise=True uses cairo arc (CW in y-down screen coords); False uses arc_negative."""
     x, y = p
     ctx = anim.ctx
     if clockwise:
@@ -193,7 +193,7 @@ def draw_vector(anim, p, angle, length, color, width=10, alpha=1):
 # --- Text ---
 
 def draw_text(anim, p, text, color, font="", font_size=100, alpha=1):
-    """Draw text at the specified position."""
+    """Draw text at the specified position. Calls ctx.new_path() after rendering to clear the text path."""
     ctx = anim.ctx
     ctx.set_source_rgba(*color, alpha)
     ctx.select_font_face(font, cairo.FONT_SLANT_NORMAL, cairo.FONT_WEIGHT_NORMAL)

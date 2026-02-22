@@ -9,6 +9,7 @@ import numpy.typing as npt
 def linear_interpolation(
     array: npt.NDArray[np.floating], index: float
 ) -> Union[float, np.floating]:
+    """Interpolate between adjacent array elements at a fractional index."""
     truncated_index = int(np.floor(index))
     next_index = (truncated_index + 1) % array.shape[0]
     next_index_weight = index - truncated_index
@@ -22,6 +23,7 @@ def linear_interpolation(
 def fade_in_out(
     signal: npt.NDArray[np.floating], fade_length: int = 2000
 ) -> npt.NDArray[np.floating]:
+    """Apply a cosine fade-in and fade-out envelope to a signal (in-place)."""
     fade_in = (1 - np.cos(np.linspace(0, np.pi, fade_length))) / 2
     fade_out = np.flip(fade_in)
     signal[:fade_length] = np.multiply(fade_in, signal[:fade_length])
@@ -32,18 +34,21 @@ def fade_in_out(
 def sawtooth(
     x: Union[float, npt.NDArray[np.floating]],
 ) -> Union[float, npt.NDArray[np.floating]]:
+    """Generate a sawtooth waveform in the range [-1, 1] from phase values."""
     return (x + np.pi) / np.pi % 2 - 1
 
 
 def square(
     x: Union[float, npt.NDArray[np.floating]],
 ) -> Union[float, npt.NDArray[np.floating]]:
+    """Generate a square waveform (-1 or +1) from phase values."""
     return np.sign(np.sin(x))
 
 
 def triangle(
     x: Union[float, npt.NDArray[np.floating]],
 ) -> Union[float, npt.NDArray[np.floating]]:
+    """Generate a triangle waveform in the range [-1, 1] from phase values."""
     return 2 * np.abs(sawtooth(x)) - 1
 
 
@@ -86,6 +91,7 @@ def build_samples(
     duration: int = 1,
     notes: Iterable[str] = NOTES.keys(),
 ) -> None:
+    """Build a wavetable of rendered audio samples for the given notes and waveform."""
     for note, f in NOTES.items():
         if note not in notes:
             continue
