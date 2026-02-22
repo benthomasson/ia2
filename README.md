@@ -5,7 +5,21 @@ A Python library for creating 2D graphics, animations, and interactive visualiza
 ## Install
 
 ```bash
+# Using uv (preferred)
+uv pip install -e .
+
+# Or using pip
 pip install -e .
+```
+
+### Run examples
+
+Each example has [PEP 723](https://peps.python.org/pep-0723/) inline script metadata, so you can run any example directly with `uv run` — no manual install needed:
+
+```bash
+uv run examples/static_image.py
+uv run examples/sine_wave.py
+uv run examples/interactive_app.py
 ```
 
 ### System dependencies
@@ -14,6 +28,8 @@ pip install -e .
 - **ffmpeg** — `brew install ffmpeg` (macOS) or `sudo apt-get install ffmpeg` (Linux)
 
 ### Python dependencies
+
+Declared in `pyproject.toml` and installed automatically:
 
 - `pycairo`
 - `pygame-ce`

@@ -5,14 +5,21 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Build & Development
 
 ```bash
-# Activate the virtualenv before any python commands
-source ~/venv/game/bin/activate
+# Using uv (preferred)
+uv pip install -e .
 
-# Install in editable mode
+# Or using a virtualenv
+source ~/venv/game/bin/activate
 pip install -e .
+
+# Run tests
+python -m pytest tests/ -v
+
+# Run an example standalone (uv resolves deps automatically via PEP 723)
+uv run examples/static_image.py
 ```
 
-There is no test suite, linter, or CI configured yet. Dependencies (cairo, numpy, pygame-ce, scipy) are not declared in pyproject.toml — they are installed in the virtualenv.
+The build backend is hatchling. Dependencies (pycairo, pygame-ce, numpy, scipy) are declared in `pyproject.toml`. All 8 examples have PEP 723 inline script metadata so they can be run standalone with `uv run`.
 
 ## Architecture
 
